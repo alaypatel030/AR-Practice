@@ -127,26 +127,48 @@
 	var mesh = new THREE.AxisHelper()
 	markerScene.add(mesh)
 
-	// add a torus knot
-	var geometry	= new THREE.CubeGeometry(1,1,1);
-	var material	= new THREE.MeshNormalMaterial({
-		transparent : true,
-		opacity: 0.5,
-		side: THREE.DoubleSide
-	});
-	var mesh	= new THREE.Mesh( geometry, material );
-	mesh.position.y	= geometry.parameters.height/2
-	markerScene.add(mesh)
+	// // add a torus knot
+	// var loader = new THREE.JSONLoader();
+	// loader.load(geometry, materials){
+	// 	var mesh = new THREE.Mesh(geometry, materials);
+	// 	scene.add(mesh);
+	// }
 
-	var geometry	= new THREE.TorusKnotGeometry(0.3,0.1,64,16);
-	var material	= new THREE.MeshNormalMaterial();
-	var mesh	= new THREE.Mesh( geometry, material );
-	mesh.position.y	= 0.5
-	markerScene.add( mesh );
 
-	onRenderFcts.push(function(delta){
-		mesh.rotation.x += delta * Math.PI
-	})
+var loader = new THREE.ObjectLoader();
+
+loader.load(
+    // resource URL
+    "UTCcity10.json",
+
+    // pass the loaded data to the onLoad function.
+//Here it is assumed to be an object
+    function ( obj ) {
+		//add the loaded object to the scene
+        markerScene.add( obj );
+    },
+
+    // Function called when download progresses
+    function ( xhr ) {
+        console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+    },
+
+    // Function called when download errors
+    function ( xhr ) {
+        console.error( 'An error happened' );
+    }
+);
+
+
+	// var geometry	= new THREE.TorusKnotGeometry(0.3,0.1,64,16);
+	// var material	= new THREE.MeshNormalMaterial();
+	// var mesh	= new THREE.Mesh( geometry, material );
+	// mesh.position.y	= 0.5
+	// markerScene.add( mesh );
+	//
+	// onRenderFcts.push(function(delta){
+	// 	mesh.rotation.x += delta * Math.PI
+	// })
 
 	//////////////////////////////////////////////////////////////////////////////////
 	//		render the whole thing on the page
