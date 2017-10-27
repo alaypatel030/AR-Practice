@@ -137,6 +137,7 @@
 
 var loader = new THREE.ObjectLoader();
 
+
 loader.load(
     // resource URL
     "UTCcity10.json",
@@ -146,6 +147,7 @@ loader.load(
     function ( obj ) {
 		//add the loaded object to the scene
         markerScene.add( obj );
+				obj.scale.set( .1, .1, .1 );
     },
 
     // Function called when download progresses
